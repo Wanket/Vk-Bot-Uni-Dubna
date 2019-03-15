@@ -1,3 +1,14 @@
+# program files
+res
+save
+save_schedule
+
+# idea/pycharm
+.idea
+
+# dolphon
+.directory
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
