@@ -20,5 +20,11 @@ class NextDayHomework(Thread):
     def run(self):
         while True:
             sleep_to_hour(20)
+            week_day = datetime.today().isocalendar()[2]
+            if week_day == 6:
+                continue
 
-            Homework.show_day(self.event, self.vk, list_of_week_days_names[datetime.today().isocalendar()[2] - 1][0])
+            if week_day == 7:
+                week_day = 0
+
+            Homework.show_day(self.event, self.vk, list_of_week_days_names[week_day][0])

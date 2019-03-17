@@ -26,6 +26,9 @@ class NextLesson(Thread):
                     sleep_to_hour(value[0])
                     sleep(value[1] * 60)
 
+                    if datetime.today().isocalendar()[2] == 7:
+                        continue
+
                     now = datetime.today()
                     lesson = ScheduleData.week.days[now.isocalendar()[2] - 1].lessons[i]
                     if lesson.lesson_id != -1:
