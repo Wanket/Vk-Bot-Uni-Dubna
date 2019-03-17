@@ -1,4 +1,3 @@
-from command.Day import Day
 from command.Homework import Homework
 from command.Remind import Remind
 from command.Command import commands
@@ -13,4 +12,3 @@ commands["/remember"] = Remember()
 commands["/remind"] = Remind()
 commands["/schedule"] = Schedule()
 commands["/homework"] = Homework()
-commands["/day"] = Day()

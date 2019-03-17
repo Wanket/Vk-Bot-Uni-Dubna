@@ -9,9 +9,8 @@ from schedule.default import default_days_even, default_days_odd
 class Day(Command):
     def __init__(self):
         super().__init__()
-        # TODO: добавить справку
-        self.help = "Тут будет справка"
-        self.full_help = "Тут будет справка"
+        self.help = "/day — сброс дня\n"
+        self.full_help = "/day сбросить [день] — сбрасывает день в состояние по-умолчанию\n"
 
     def on_message(self, event, vk):
         spl = event.text.split()

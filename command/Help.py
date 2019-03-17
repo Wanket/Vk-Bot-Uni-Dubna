@@ -6,8 +6,9 @@ from command.Command import Command, commands
 class Help(Command):
     def __init__(self):
         super().__init__()
-        self.help = "/help — Показать эту справку\n"
-        self.full_help = self.help
+        self.help = "/help — показать справку\n"
+        self.full_help = "/help — показать справку обо всех командах\n" \
+                         "/help [команда] — показать полную справку по команде\n"
 
     def on_message(self, event, vk):
         message = Message(event)

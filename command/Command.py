@@ -4,7 +4,7 @@ from api import send_message
 def on_message(event, vk):
     key = event.text.split()[0]
 
-    if "payload" in event.message_data:
+    if event.message_data is not None and "payload" in event.message_data:
         payload = event.message_data["payload"]
 
         if payload != {} and ("ignore" in payload):

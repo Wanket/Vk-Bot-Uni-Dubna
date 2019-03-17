@@ -7,9 +7,12 @@ from schedule.default import list_of_lesson_names
 class Homework(AbstractSchedule):
     def __init__(self):
         super().__init__()
-        # TODO: добавить справку
-        self.help = "Тут будет справка"
-        self.full_help = "Тут будет справка"
+        self.help = "/homework — работа с дз\n"
+        self.full_help = "/homework добавить [предмет] [дз] — добавить дз для предмета\n" \
+                         "/homework изменить [предмет] [дз] — изменить дз для предмета\n" \
+                         "/homework удалить [предмет] — удалить дз для предмета\n" \
+                         "/homework показать [предмет/день] — показать дз для предмета/за день. Например: " \
+                         "/homework показать Экономика или /homework показать ВТ\n"
 
     def update(self, event, vk, spl):
         if len(spl) < 4:

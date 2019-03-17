@@ -1,16 +1,34 @@
+from datetime import datetime
+
 from api import send_message
 from command.AbstractShedule import AbstractSchedule
 from schedule.Lesson import Lesson
 from schedule.ScheduleData import ScheduleData
-from schedule.default import list_of_lesson_names
+from schedule.default import list_of_lesson_names, default_days_even, default_days_odd
 
 
 class Schedule(AbstractSchedule):
     def __init__(self):
         super().__init__()
-        # TODO: добавить справку
-        self.help = "Тут будет справка"
-        self.full_help = "Тут будет справка"
+        self.help = "/schedule — работа с расписанием\n"
+        self.full_help = "/schedule добавить [день] [номер пары] [аудиторрия] [предмет] [лекция(не обязательно)] — " \
+                         "добавить пару в расписание. Например: " \
+                         "/schedule добавить ВТ 1 1-118 Экономика лекция\n" \
+                         "/schedule изменить [день] [номер пары] [аудиторрия] [предмет] [лекция(не обязательно)] — " \
+                         "изменить пару в расписании\n" \
+                         "/schedule удалить [день] [пара] — удалить пару\n" \
+                         "/schedule показать [день] [пара(не обязательно)] — показать пару или все пары за день\n" \
+                         "/schedule сбросить [день] — сбрасывает день в состояние по-умолчанию\n"
+
+    def on_message(self, event, vk):
+        spl = event.text.split()
+
+        if len(spl) < 2:
+            send_message(event, vk, message=self.full_help)
+        elif spl[1] == "сбросить":
+            self.reset(event, vk, spl)
+        else:
+            super().on_message(event, vk)
 
     def update(self, event, vk, spl):
         if len(spl) < 6:
@@ -18,7 +36,7 @@ class Schedule(AbstractSchedule):
             return
 
         ScheduleData.week.days[ScheduleData.get_day_number(spl[2])].lessons[int(spl[3]) - 1] = Lesson(
-            ScheduleData.get_lesson_number(spl[5]), spl[4], True if len(spl) > 6 and spl[6] == "лекция" else False)
+            ScheduleData.get_lesson_number(spl[5]), spl[4], len(spl) > 6 and spl[6] == "лекция")
 
         send_message(event, vk, message="Сделал")
 
@@ -62,3 +80,17 @@ class Schedule(AbstractSchedule):
 
         if is_found:
             send_message(event, vk, message=message)
+
+    def reset(self, event, vk, spl):
+        if len(spl) < 3:
+            send_message(event, vk, message=self.full_help)
+            return
+
+        target_day = ScheduleData.get_day_number(spl[2])
+        iso = datetime.today().isocalendar()
+        is_even_week = (iso[1] - 1) % 2 == 0 if target_day < iso[2] - 1 else iso[1] % 2 == 0
+
+        ScheduleData.week.days[target_day] = default_days_even[target_day] \
+            if is_even_week else default_days_odd[target_day]
+
+        send_message(event, vk, message="Сбросил")

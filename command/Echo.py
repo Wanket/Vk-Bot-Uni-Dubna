@@ -6,8 +6,8 @@ from command.Command import Command
 class Echo(Command):
     def __init__(self):
         super().__init__()
-        self.help = "/echo [сообщение для повтора] — Поврорить сообщение полностью\n"
-        self.full_help = self.help
+        self.help = "/echo — повторение введенного сообщения\n"
+        self.full_help = "/echo [сообщение для повтора] — повторить сообщение полностью\n"
 
     def on_message(self, event, vk):
         message = Message(event)

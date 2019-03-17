@@ -8,10 +8,8 @@ from command.Command import Command
 class Remind(Command):
     def __init__(self):
         super().__init__()
-        self.help = "/remind [ключевое слово]"
-        self.full_help = self.help + "Ключевое слово может быть только одно. " \
-                                     "Для использования нескольких ключевых слов, можно, например, добавлять \"_\": " \
-                                     "одно_слово_и_другое_слово\nОстальная часть команды игнорируется"
+        self.help = "/remind — напомнить сообщение\n"
+        self.full_help = "/remind [ключ] — напомнить сообщение по ключу\n"
 
     def on_message(self, event, vk):
         message = Message(event)
@@ -23,13 +21,14 @@ class Remind(Command):
 
         spl = message.text.split()[1]
 
-        if spl[1].find("/"):
+        if spl.find("/") != -1:
             send_message(event, vk, message="Иньекцию захотел сделать? А вот хрен!")
             return
 
         if not isfile(f"save/{spl}"):
             send_message(event, vk,
                          message=f"Сообщение по ключу {spl} не найдено")
+            return
 
         with open(f"save/{spl}", "rb") as f:
             message = Message.load(f.read())
