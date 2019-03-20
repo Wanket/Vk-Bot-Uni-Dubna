@@ -36,4 +36,6 @@ class NextLesson(Thread):
                         lesson_name = list_of_lesson_names[lesson.lesson_id][0]
                         ScheduleData.homework[lesson.lesson_id] = None
                         send_message(self.event, self.vk, message=f"В {self.time_schedule[i][0]}:"
-                                     f"{self.time_schedule[i][1]} будет {lesson_name}")
+                                     f"{self.time_schedule[i][1] + 20} "
+                                     f"будет {'лекция' if lesson.is_lecture else 'семинар'} по {lesson_name} "
+                                     f"в кабинете {lesson.classroom}")
