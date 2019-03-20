@@ -14,7 +14,7 @@ default_days_even = \
         Day([
             Lesson(2, "1-118", True),
             Lesson(3, "1-213", False),
-            Lesson(-1, None, None),
+            Lesson(4, "с/к Олимп", False),
             Lesson(-1, None, None),
             Lesson(-1, None, None),
             Lesson(-1, None, None)
@@ -36,9 +36,9 @@ default_days_even = \
             Lesson(-1, None, None)
         ]),
         Day([
-            Lesson(6, "1-213", None),
-            Lesson(7, "1-318", None),
-            Lesson(8, "1-427", None),
+            Lesson(6, "1-213", False),
+            Lesson(7, "1-318", False),
+            Lesson(8, "1-427", False),
             Lesson(-1, None, None),
             Lesson(-1, None, None),
             Lesson(-1, None, None)
@@ -66,13 +66,13 @@ default_days_odd = \
         Day([
             Lesson(2, "1-118", True),
             Lesson(3, "1-213", False),
-            Lesson(-1, None, None),
+            Lesson(4, "с/к Олимп", False),
             Lesson(-1, None, None),
             Lesson(-1, None, None),
             Lesson(-1, None, None)
         ]),
         Day([
-            Lesson(2, "1-118", False),
+            Lesson(2, "1-118", True),
             Lesson(2, "2-310", False),
             Lesson(4, "c/к Олмип", False),
             Lesson(5, "2-304а", False),
@@ -88,9 +88,9 @@ default_days_odd = \
             Lesson(-1, None, None)
         ]),
         Day([
-            Lesson(6, "1-213", None),
-            Lesson(7, "1-318", None),
-            Lesson(8, "1-427", None),
+            Lesson(6, "1-213", False),
+            Lesson(7, "1-318", False),
+            Lesson(8, "1-427", False),
             Lesson(-1, None, None),
             Lesson(-1, None, None),
             Lesson(-1, None, None)

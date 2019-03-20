@@ -72,9 +72,9 @@ class Schedule(AbstractSchedule):
         day_name = spl[2]
         message = f"Расписание на {day_name}\n"
         is_found = False
-        for lesson in ScheduleData.week.days[ScheduleData.get_day_number(day_name)].lessons:
+        for i, lesson in enumerate(ScheduleData.week.days[ScheduleData.get_day_number(day_name)].lessons):
             if lesson.lesson_id != -1:
-                message += f"Аудитория: {lesson.classroom}, предмет: {list_of_lesson_names[lesson.lesson_id][0]}, " \
+                message += f"Пара: {i + 1}, аудитория: {lesson.classroom}, предмет: {list_of_lesson_names[lesson.lesson_id][0]}, " \
                     f"{'не ' if not lesson.is_lecture else ''}лекция\n"
                 is_found = True
 

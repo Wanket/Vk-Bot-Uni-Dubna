@@ -19,15 +19,16 @@ class NextLesson(Thread):
 
     def run(self):
         while True:
+            sleep_to_hour(7)
             now = datetime.today()
 
+            if now.isocalendar()[2] == 7:
+                continue
+
             for i, value in enumerate(self.time_schedule):
-                if now.hour > value[0] or now.hour == value[0] and now.minute > value[1]:
+                if now.hour < value[0] or now.hour == value[0] and now.minute < value[1]:
                     sleep_to_hour(value[0])
                     sleep(value[1] * 60)
-
-                    if datetime.today().isocalendar()[2] == 7:
-                        continue
 
                     now = datetime.today()
                     lesson = ScheduleData.week.days[now.isocalendar()[2] - 1].lessons[i]
