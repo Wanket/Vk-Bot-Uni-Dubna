@@ -16,6 +16,10 @@ class Echo(Command):
 
         if message.is_empty("/echo"):
             send_message(event, vk, message="И как мне предлагаешь повторить пустое сообщение?")
+        elif parse_text == "ping":
+            send_message(event, vk, message="pong")
+        elif parse_text == "жив?":
+            send_message(event, vk, message="да, жив")
         elif parse_text == "":
             send_message(event, vk, attachment=message.attachments, forward_messages=message.forward_messages,
                          reply_to=message.reply_to)

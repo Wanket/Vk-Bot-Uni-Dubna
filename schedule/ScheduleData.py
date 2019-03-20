@@ -11,11 +11,11 @@ class ScheduleData(object):
 
     @staticmethod
     def get_day_number(name):
-        return next(i for i, x in enumerate(list_of_week_days_names) if name in x)
+        return next(i for i, x in enumerate(list_of_week_days_names) if name.lower() in x)
 
     @staticmethod
     def get_lesson_number(name):
-        return next(i for i, x in enumerate(list_of_lesson_names) if name in x)
+        return next(i for i, x in enumerate(list_of_lesson_names) if name.lower() in x)
 
     @staticmethod
     def dump():
