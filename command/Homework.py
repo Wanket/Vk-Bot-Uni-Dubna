@@ -51,7 +51,7 @@ class Homework(AbstractSchedule):
                 continue
 
             homework = ScheduleData.homework[lesson.lesson_id]
-            if homework is not None:
+            if homework is not None and not lesson.is_lecture:
                 is_found = True
                 message += f"{list_of_lesson_names[lesson.lesson_id][0]}: {homework}\n"
         send_message(event, vk, message=message if is_found else f"Ничего на {day_name} нет, радуйтесь!")

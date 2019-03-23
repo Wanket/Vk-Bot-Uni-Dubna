@@ -19,7 +19,7 @@ class NextLesson(Thread):
 
     def run(self):
         while True:
-            sleep_to_hour(7)
+            # sleep_to_hour(7)
             now = datetime.today()
 
             if now.isocalendar()[2] == 7:
@@ -35,7 +35,14 @@ class NextLesson(Thread):
                     if lesson.lesson_id != -1:
                         lesson_name = list_of_lesson_names[lesson.lesson_id][0]
                         ScheduleData.homework[lesson.lesson_id] = None
-                        send_message(self.event, self.vk, message=f"В {self.time_schedule[i][0]}:"
-                                     f"{self.time_schedule[i][1] + 20} "
+
+                        hours = self.time_schedule[i][0]
+                        minutes = self.time_schedule[i][1] + 20
+                        if minutes >= 60:
+                            hours += 1
+                            minutes -= 60
+
+                        send_message(self.event, self.vk, message=f"В {hours}:"
+                                     f"{minutes} "
                                      f"будет {'лекция' if lesson.is_lecture else 'семинар'} по {lesson_name} "
                                      f"в кабинете {lesson.classroom}")

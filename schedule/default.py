@@ -38,7 +38,7 @@ default_days_even = \
         Day([
             Lesson(6, "1-213", False),
             Lesson(7, "1-318", False),
-            Lesson(8, "1-427", False),
+            Lesson(8, "3-100", False),
             Lesson(-1, None, None),
             Lesson(-1, None, None),
             Lesson(-1, None, None)
@@ -90,7 +90,7 @@ default_days_odd = \
         Day([
             Lesson(6, "1-213", False),
             Lesson(7, "1-318", False),
-            Lesson(8, "1-427", False),
+            Lesson(8, "3-100", False),
             Lesson(-1, None, None),
             Lesson(-1, None, None),
             Lesson(-1, None, None)
