@@ -1,6 +1,3 @@
-import json
-
-from Message import Message
 from api import send_message
 from command.AbstractShedule import AbstractSchedule
 from schedule.ScheduleData import ScheduleData
@@ -11,8 +8,8 @@ class Homework(AbstractSchedule):
     def __init__(self):
         super().__init__()
         self.help = "/homework — работа с дз\n"
-        self.full_help = "/homework добавить [предмет] [дз] — добавить дз для предмета\n" \
-                         "/homework изменить [предмет] [дз] — изменить дз для предмета\n" \
+        self.full_help = "/homework добавить [предмет] [дз/пересланное сообщение] — добавить дз для предмета\n" \
+                         "/homework изменить [предмет] [дз/пересланное сообщение] — изменить дз для предмета\n" \
                          "/homework удалить [предмет] — удалить дз для предмета\n" \
                          "/homework показать [предмет/день] — показать дз для предмета/за день. Например: " \
                          "/homework показать Экономика или /homework показать ВТ\n"
@@ -23,14 +20,17 @@ class Homework(AbstractSchedule):
             return
 
         if len(spl) == 4:
-            ScheduleData.homework[ScheduleData.get_lesson_number(spl[2])] = event.text.replace("/homework ", "", 1).replace(
-                spl[1], "", 1).replace(spl[2], "", 1)
+            ScheduleData.homework[ScheduleData.get_lesson_number(spl[2])] = event.text.replace("/homework ", "", 1)\
+                .replace(spl[1], "", 1).replace(spl[2], "", 1)
             send_message(event, vk, message="Добавил")
 
         if len(spl) == 3:
-            if len(event.message_data["reply_message"]["text"]) > 0:
-                ScheduleData.homework[ScheduleData.get_lesson_number(spl[2])] = event.message_data["reply_message"]["text"]
+            if "reply_message" in event.message_data and "text" in event.message_data["reply_message"]:
+                ScheduleData.homework[ScheduleData.get_lesson_number(spl[2])] \
+                    = event.message_data["reply_message"]["text"]
                 send_message(event, vk, message="Добавил")
+            else:
+                send_message(event, vk, message=self.full_help)
 
     def delete(self, event, vk, spl):
         if len(spl) < 3:
@@ -47,7 +47,8 @@ class Homework(AbstractSchedule):
 
         try:
             homework = ScheduleData.homework[ScheduleData.get_lesson_number(spl[2])]
-            send_message(event, vk, message=f"Дз по {list_of_lesson_names[ScheduleData.get_lesson_number(spl[2])][0]}: {homework}" if homework is not None else "Ничего нет, радуйтесь!")
+            send_message(event, vk, message=f"{list_of_lesson_names[ScheduleData.get_lesson_number(spl[2])][0]}:"
+                                            f" {homework}" if homework is not None else "Ничего нет, радуйтесь!")
         except StopIteration:
             self.show_day(event, vk, spl[2])
 

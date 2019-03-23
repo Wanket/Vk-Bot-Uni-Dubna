@@ -42,7 +42,6 @@ class NextLesson(Thread):
                             hours += 1
                             minutes -= 60
 
-                        send_message(self.event, self.vk, message=f"В {hours}:"
-                                     f"{minutes} "
-                                     f"будет {'лекция' if lesson.is_lecture else 'семинар'} по {lesson_name} "
+                        send_message(self.event, self.vk, message=f"В {hours}:{minutes} "
+                                     f"будет {'лекция' if lesson.is_lecture else 'семинар'} по предмету {lesson_name} "
                                      f"в кабинете {lesson.classroom}")

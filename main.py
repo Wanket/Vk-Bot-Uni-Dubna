@@ -31,7 +31,6 @@ def override_methods():
 
         for i in range(10):
             try:
-                print(f"call {method}, {url}, {params}")
                 return func(self, method, url,
                             params, data, headers, cookies, files,
                             auth, timeout, allow_redirects, proxies,

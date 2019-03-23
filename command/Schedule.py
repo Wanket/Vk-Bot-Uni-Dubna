@@ -74,8 +74,8 @@ class Schedule(AbstractSchedule):
         is_found = False
         for i, lesson in enumerate(ScheduleData.week.days[ScheduleData.get_day_number(day_name)].lessons):
             if lesson.lesson_id != -1:
-                message += f"Пара: {i + 1}, аудитория: {lesson.classroom}, предмет: {list_of_lesson_names[lesson.lesson_id][0]}, " \
-                    f"{'не ' if not lesson.is_lecture else ''}лекция\n"
+                message += f"Пара: {i + 1}, аудитория: {lesson.classroom}, предмет: " \
+                    f"{list_of_lesson_names[lesson.lesson_id][0]}, {'не ' if not lesson.is_lecture else ''}лекция\n"
                 is_found = True
 
         if is_found:
