@@ -1,3 +1,6 @@
+import json
+
+from Message import Message
 from api import send_message
 from command.AbstractShedule import AbstractSchedule
 from schedule.ScheduleData import ScheduleData
@@ -15,13 +18,19 @@ class Homework(AbstractSchedule):
                          "/homework показать Экономика или /homework показать ВТ\n"
 
     def update(self, event, vk, spl):
-        if len(spl) < 4:
+        if len(spl) < 3:
             send_message(event, vk, message=self.full_help)
             return
 
-        ScheduleData.homework[ScheduleData.get_lesson_number(spl[2])] = event.text.replace("/homework ", "", 1).replace(
-            spl[1], "", 1).replace(spl[2], "", 1)
-        send_message(event, vk, message="Сделал")
+        if len(spl) == 4:
+            ScheduleData.homework[ScheduleData.get_lesson_number(spl[2])] = event.text.replace("/homework ", "", 1).replace(
+                spl[1], "", 1).replace(spl[2], "", 1)
+            send_message(event, vk, message="Добавил")
+
+        if len(spl) == 3:
+            if len(event.message_data["reply_message"]["text"]) > 0:
+                ScheduleData.homework[ScheduleData.get_lesson_number(spl[2])] = event.message_data["reply_message"]["text"]
+                send_message(event, vk, message="Добавил")
 
     def delete(self, event, vk, spl):
         if len(spl) < 3:
@@ -38,7 +47,7 @@ class Homework(AbstractSchedule):
 
         try:
             homework = ScheduleData.homework[ScheduleData.get_lesson_number(spl[2])]
-            send_message(event, vk, message=homework if homework is not None else "Ничего нет, радуйтесь!")
+            send_message(event, vk, message=f"Дз по {list_of_lesson_names[ScheduleData.get_lesson_number(spl[2])][0]}: {homework}" if homework is not None else "Ничего нет, радуйтесь!")
         except StopIteration:
             self.show_day(event, vk, spl[2])
 
