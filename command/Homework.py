@@ -19,15 +19,23 @@ class Homework(AbstractSchedule):
             send_message(event, vk, message=self.full_help)
             return
 
-        if len(spl) == 4:
+        if len(spl) > 3:
             ScheduleData.homework[ScheduleData.get_lesson_number(spl[2])] = event.text.replace("/homework ", "", 1)\
                 .replace(spl[1], "", 1).replace(spl[2], "", 1)
             send_message(event, vk, message="Добавил")
+            return
 
         if len(spl) == 3:
-            if "reply_message" in event.message_data and "text" in event.message_data["reply_message"]:
+            if "reply_message" in event.message_data and "text" in event.message_data["reply_message"]\
+                    and event.message_data["reply_message"]["text"] != "":
                 ScheduleData.homework[ScheduleData.get_lesson_number(spl[2])] \
                     = event.message_data["reply_message"]["text"]
+                send_message(event, vk, message="Добавил")
+            elif "fwd_messages" in event.message_data and len(event.message_data["fwd_messages"]) != 0 \
+                    and "text" in event.message_data["fwd_messages"][0] \
+                    and event.message_data["fwd_messages"][0]["text"] != "":
+                ScheduleData.homework[ScheduleData.get_lesson_number(spl[2])] \
+                    = event.message_data["fwd_messages"][0]["text"]
                 send_message(event, vk, message="Добавил")
             else:
                 send_message(event, vk, message=self.full_help)
