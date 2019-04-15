@@ -12,13 +12,14 @@ class Echo(Command):
     def on_message(self, event, vk):
         message = Message(event)
 
-        parse_text = message.text.replace("/echo ", "", 1)
+        parse_text = message.text.replace("/echo", "", 1)
+        strip_parse_text = parse_text.strip()
 
         if message.is_empty("/echo"):
             send_message(event, vk, message="И как мне предлагаешь повторить пустое сообщение?")
-        elif parse_text == "ping":
+        elif strip_parse_text == "ping":
             send_message(event, vk, message="pong")
-        elif parse_text == "":
+        elif strip_parse_text == "":
             send_message(event, vk, attachment=message.attachments, forward_messages=message.forward_messages,
                          reply_to=message.reply_to)
         else:

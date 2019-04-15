@@ -19,7 +19,7 @@ class NextLesson(Thread):
 
     def run(self):
         while True:
-            # sleep_to_hour(7)
+            sleep_to_hour(7)
             now = datetime.today()
 
             if now.isocalendar()[2] == 7:
@@ -42,6 +42,6 @@ class NextLesson(Thread):
                             hours += 1
                             minutes -= 60
 
-                        send_message(self.event, self.vk, message=f"В {hours}:{minutes} "
+                        send_message(self.event, self.vk, message=f"В {hours}:{minutes if minutes != 0 else '00'} "
                                      f"будет {'лекция' if lesson.is_lecture else 'семинар'} по предмету {lesson_name} "
                                      f"в кабинете {lesson.classroom}")
